@@ -1,9 +1,9 @@
-import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
 
+import javax.swing.JPanel;
 public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_WIDTH = 600;
     static final int SCREE_HEIGHT = 600;
@@ -46,13 +46,41 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         g.setColor(Color.red);
         g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+
+        for(int i=0; i<bodyParts;i++){
+            if(i==0){
+                g.setColor(Color.green);
+                g.fillRect(x[i], y[i], UNIT_SIZE,UNIT_SIZE);
+            }
+            else{
+                g.setColor(new Color(45,180,0));
+                g.fillRect(x[i], y[i], UNIT_SIZE,UNIT_SIZE);
+            }
+        }
     }
     public void newApple(){
         appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
         appleY = random.nextInt((int)(SCREE_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
     }
     public void move(){
-
+        for(int i = bodyParts; i>0;i--){
+            x[i] = x[i-1];
+            y[i] = y[i-1];
+        }
+        switch (direction){
+            case 'U':
+                y[0] = y[0] - UNIT_SIZE;
+                break;
+            case 'D':
+                y[0] = y[0] + UNIT_SIZE;
+                break;
+            case 'L':
+                y[0] = y[0] - UNIT_SIZE;
+                break;
+            case 'R':
+                y[0] = y[0] + UNIT_SIZE;
+                break;
+        }
     }
     public void checkApple(){
 
